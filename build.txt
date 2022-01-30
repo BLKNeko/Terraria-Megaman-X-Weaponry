@@ -1,0 +1,4 @@
+displayName = Megaman X Weaponry
+author = BLKNeko
+version = 1.0.0.0
+hideCode = false

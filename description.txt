@@ -1,0 +1,25 @@
+Megaman X Weaponry is a mod that add a lot of Megaman universe weapons to Terraria.
+
+This mod contais some of Megaman series SFX.
+
+So far i added to this mod:
+-MegaBuster (Ranged weapons with charge function)
+-XBuster (Ranged weapons with charge function)
+-ZSaber (Meelee weapon with charge function)
+-SigmaBlade (Meelee weapo  with two actions)
+-CyberElf (Pet that emit lights, add +20 HP and +5 HP Regen)
+-X Armor set (Give X abilities like slide walls, dash, etc)
+-X Mask (Vanity item)
+-MaxBuster (Ranged weapons with charge function)
+-ZSaberBlack (Meelee weapon with charge function)
+-AwakenSigmaBlade (Meelee weapon with charge function)
+-UltimateBuster (Ranged weapons with charge function)
+
+If you want to talk about the mod or chat you can DM me in Discord BLKNeko#8448
+
+I know that chargeLoop SFX is not looping perfectly, but i just can't make a decent loop, sorry.
+
+Thanks to:
+- @lia_shimizu that make all Buster sprites and X armor set
+- My Friends that help with balance and art.
+- Vibrant Reverie that creates the charge system, i used his mod as a base.

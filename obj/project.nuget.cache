@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "zdyF4QsM9G2qNauAmHnhvkDbfNmup675kp1jtvuylQWpSrZCK1SDN2zSn8XvljtULVh2G19Zv9SFJb5dslyiMg==",
+  "success": true,
+  "projectFilePath": "A:\\Users\\augus\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\MegamanXWeaponry\\MegamanXWeaponry.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\augus\\.nuget\\packages\\tmodloader.codeassist\\0.1.3\\tmodloader.codeassist.0.1.3.nupkg.sha512"
+  ],
+  "logs": []
+}

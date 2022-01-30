@@ -1,0 +1,53 @@
+{
+  "format": 1,
+  "restore": {
+    "A:\\Users\\augus\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\MegamanXWeaponry\\MegamanXWeaponry.csproj": {}
+  },
+  "projects": {
+    "A:\\Users\\augus\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\MegamanXWeaponry\\MegamanXWeaponry.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "A:\\Users\\augus\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\MegamanXWeaponry\\MegamanXWeaponry.csproj",
+        "projectName": "MegamanXWeaponry",
+        "projectPath": "A:\\Users\\augus\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\MegamanXWeaponry\\MegamanXWeaponry.csproj",
+        "packagesPath": "C:\\Users\\augus\\.nuget\\packages\\",
+        "outputPath": "A:\\Users\\augus\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\MegamanXWeaponry\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\augus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net45"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net45": {
+            "targetAlias": "net45",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net45": {
+          "targetAlias": "net45",
+          "dependencies": {
+            "tModLoader.CodeAssist": {
+              "target": "Package",
+              "version": "[0.1.*, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
