@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -7,40 +8,47 @@ namespace MegamanXWeaponry.Items
 	public class Cyberelf : ModItem
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cyber Elf");
-			Tooltip.SetDefault("Summons an Cyber Elf to Help");
+			DisplayName.SetDefault("Cyber-Elf");
+			Tooltip.SetDefault("Summons a Cyber-Elf to provide support.");
 		}
 
 		public override void SetDefaults() {
-			item.damage = 0;
-			item.useStyle = ItemUseStyleID.HoldingUp;
-			item.shoot = ModContent.ProjectileType<Projectiles.Pets.CyberelfPet>();
-			item.width = 16;
-			item.height = 30;
-			item.UseSound = SoundID.Item29;
-			item.useAnimation = 20;
-			item.useTime = 20;
-			item.rare = ItemRarityID.Pink;
-			item.noMelee = true;
-			item.value = Item.sellPrice(0, 50, 50, 0);
-			item.buffType = ModContent.BuffType<Buffs.CyberelfBuff>();
-			item.scale = 0.5f;
+			Item.damage = 0;
+			Item.useStyle = ItemUseStyleID.HoldUp;
+			Item.shoot = ModContent.ProjectileType<Projectiles.Pets.CyberelfPet>();
+			Item.width = 16;
+			Item.height = 30;
+			Item.UseSound = SoundID.Item29;
+			Item.useAnimation = 20;
+			Item.useTime = 20;
+			Item.rare = ItemRarityID.Pink;
+			Item.noMelee = true;
+			Item.value = Item.sellPrice(gold: 55);
+			Item.buffType = ModContent.BuffType<Buffs.CyberelfBuff>();
+			Item.scale = 0.5f;
 		}
 
 		public override void AddRecipes() {
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Firefly, 10);
-			recipe.AddIngredient(ItemID.PixieDust, 10);
-			recipe.AddIngredient(ItemID.CrystalShard, 10);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-		}
+            CreateRecipe()
+            .AddIngredient(ItemID.Firefly, 10)
+			.AddIngredient(ItemID.PixieDust, 10)
+			.AddIngredient(ItemID.CrystalShard, 10)
+			.AddTile(TileID.TinkerersWorkbench)
+            .Register();
 
-		public override void UseStyle(Player player) {
-			if (player.whoAmI == Main.myPlayer && player.itemTime == 0) {
-				player.AddBuff(item.buffType, 3600, true);
-			}
-		}
+            
+                
+        }
+
+		public override void UseStyle(Player player, Rectangle heldItemFrame)
+		{
+			base.UseStyle(player, heldItemFrame);
+
+            if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
+            {
+                player.AddBuff(Item.buffType, 9600, true);
+            }
+        }
+
 	}
 }

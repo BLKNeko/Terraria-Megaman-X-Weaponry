@@ -10,32 +10,51 @@ namespace MegamanXWeaponry.Projectiles.Pets
 	{
 		public static bool exampleLightPet = true;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cyber Elf");
-			Main.projFrames[projectile.type] = 6;
-			Main.projPet[projectile.type] = true;
-			ProjectileID.Sets.TrailingMode[projectile.type] = 2;
-			ProjectileID.Sets.LightPet[projectile.type] = true;
+			DisplayName.SetDefault("Cyber-Elf");
+			Main.projFrames[Projectile.type] = 6;
+			Main.projPet[Projectile.type] = true;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			ProjectileID.Sets.LightPet[Projectile.type] = true;
 		}
 
 		public override void SetDefaults() {
-			projectile.width = 30;
-			projectile.height = 30;
-			projectile.penetrate = -1;
-			projectile.netImportant = true;
-			projectile.timeLeft *= 5;
-			projectile.friendly = true;
-			projectile.ignoreWater = true;
-			projectile.scale = 0.8f;
-			projectile.tileCollide = false;
+            Projectile.width = 30;
+			Projectile.height = 30;
+			Projectile.penetrate = -1;
+			Projectile.netImportant = true;
+			Projectile.timeLeft *= 5;
+			Projectile.friendly = true;
+			Projectile.ignoreWater = true;
+			Projectile.scale = 0.8f;
+			Projectile.tileCollide = false;
+			Projectile.CloneDefaults(ProjectileID.GreenFairy);
+			AIType = ProjectileID.GreenFairy;
 		}
 
 		private const int fadeInTicks = 30;
 		private const int fullBrightTicks = 200;
 		private const int fadeOutTicks = 30;
-		private const int range = 380;
+		//380
+		private const int range = 250;
 		private readonly int rangeHypoteneus = (int)Math.Sqrt(range * range + range * range);
 
 		public override void AI() {
+
+			Player player = Main.player[Projectile.owner];
+
+			if (player.dead)
+			{
+				Projectile.timeLeft = 2;
+			}
+
+			Dust dust;
+			// You need to set position depending on what you are doing. You may need to subtract width/2 and height/2 as well to center the spawn rectangle.
+			//Vector2 position = Main.LocalPlayer.Center;
+			dust = Main.dust[Terraria.Dust.NewDust(Projectile.position, 30, 30, 6, 0f, 0f, 0, new Color(0, 255, 44), 1f)];
+			Lighting.AddLight(Projectile.Center, 191 * 0.008f, 255 * 0.008f, 208 * 0.008f);
+
+			/*
+
 			Player player = Main.player[projectile.owner];
             //ExamplePlayer modPlayer = player.GetModPlayer<ExamplePlayer>();
             if (!player.HasBuff(ModContent.BuffType<Buffs.CyberelfBuff>())){
@@ -115,6 +134,8 @@ namespace MegamanXWeaponry.Projectiles.Pets
 			if ((int)projectile.ai[0] % 100 == 0) {
 				projectile.velocity = projectile.velocity.RotatedByRandom(MathHelper.ToRadians(90));
 			}
+
+			*/
 		}
 	}
 }

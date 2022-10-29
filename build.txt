@@ -1,4 +1,5 @@
 displayName = Megaman X Weaponry
 author = BLKNeko
-version = 1.0.0.0
+version = 1.18.0.0
 hideCode = false
+homepage = https://forums.terraria.org/index.php?threads/megaman-x-weaponry-mod.110693/

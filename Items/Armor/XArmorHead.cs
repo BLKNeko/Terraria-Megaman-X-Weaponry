@@ -11,7 +11,7 @@ namespace MegamanXWeaponry.Items.Armor
 		{
 			base.SetStaticDefaults();
 			DisplayName.SetDefault("X Helmet");
-			Tooltip.SetDefault("This is Megaman X Helmet"
+			Tooltip.SetDefault("This is Mega Man X's helmet."
 				+ "\nMana Regen +5"
 				+ "\nMana Max +10"
 				+ "\nCan detect traps");
@@ -19,11 +19,11 @@ namespace MegamanXWeaponry.Items.Armor
 
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 18;
-			item.value = 5000;
-			item.rare = ItemRarityID.Blue;
-			item.defense = 11;
+			Item.width = 18;
+            Item.height = 18;
+            Item.value = 5000;
+            Item.rare = ItemRarityID.Blue;
+            Item.defense = 11;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -43,9 +43,14 @@ namespace MegamanXWeaponry.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.allDamage += 0.2f;
-			player.rangedDamage += 0.5f;
+			player.GetDamage(DamageClass.Generic) += 0.2f;
+            player.GetDamage(DamageClass.Ranged) += 0.5f;
 			player.lifeRegen += 2;
+
+			if(player.statLife <= (player.statLifeMax / 2))
+            {
+				player.lifeRegen += 8;
+            }
 			/* Here are the individual weapon class bonuses.
 			player.meleeDamage -= 0.2f;
 			player.thrownDamage -= 0.2f;
@@ -59,13 +64,21 @@ namespace MegamanXWeaponry.Items.Armor
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.DemoniteBar, 10);
-			recipe.AddIngredient(ItemID.HellstoneBar, 5);
-			recipe.AddIngredient(ItemID.LeadBar, 5);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-		}
+
+            CreateRecipe()
+				.AddIngredient(ItemID.DemoniteBar, 10)
+				.AddIngredient(ItemID.HellstoneBar, 5)
+				.AddIngredient(ItemID.LeadBar, 5)
+				.AddTile(TileID.Anvils)
+				.Register();
+
+            CreateRecipe()
+			.AddIngredient(ItemID.CrimtaneBar, 10)
+			.AddIngredient(ItemID.HellstoneBar, 5)
+			.AddIngredient(ItemID.LeadBar, 5)
+			.AddTile(TileID.Anvils)
+			.Register();
+
+        }
 	}
 }

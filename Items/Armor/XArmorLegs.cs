@@ -11,25 +11,25 @@ namespace MegamanXWeaponry.Items.Armor
 		{
 			base.SetStaticDefaults();
 			DisplayName.SetDefault("X Legs");
-			Tooltip.SetDefault("This is Megaman X Legs"
-				+ "\nAllow you to perforam a DASH!"
+			Tooltip.SetDefault("These are Mega Man X's Legs."
+				+ "\nAllow you to perform a DASH!"
 				+ "\nMove faster!");
 		}
 
 		public override void SetDefaults()
 		{
-			item.width = 18;
-			item.height = 18;
-			item.value = 5000;
-			item.rare = ItemRarityID.Blue;
-			item.defense = 10;
+			Item.width = 18;
+            Item.height = 18;
+            Item.value = Item.sellPrice(gold: 5);
+            Item.rare = ItemRarityID.Blue;
+            Item.defense = 10;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
 			player.maxRunSpeed += 1.5f;
 			player.AddBuff(BuffID.Shine, 2);
-			player.dash += 2;
+			player.dashType = 2;
 
 
 		}
@@ -40,13 +40,20 @@ namespace MegamanXWeaponry.Items.Armor
 
         public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.DemoniteBar, 5);
-			recipe.AddIngredient(ItemID.HellstoneBar, 5);
-			recipe.AddIngredient(ItemID.LeadBar, 5);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-		}
+
+            CreateRecipe()
+				.AddIngredient(ItemID.DemoniteBar, 5)
+				.AddIngredient(ItemID.HellstoneBar, 5)
+				.AddIngredient(ItemID.LeadBar, 5)
+				.AddTile(TileID.Anvils)
+				.Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.CrimtaneBar, 5)
+                .AddIngredient(ItemID.HellstoneBar, 5)
+                .AddIngredient(ItemID.LeadBar, 5)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
 	}
 }

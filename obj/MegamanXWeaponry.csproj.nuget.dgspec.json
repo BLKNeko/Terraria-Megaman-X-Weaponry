@@ -1,32 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "A:\\Users\\augus\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\MegamanXWeaponry\\MegamanXWeaponry.csproj": {}
+    "A:\\Users\\augus\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\MegamanXWeaponry\\MegamanXWeaponry.csproj": {}
   },
   "projects": {
-    "A:\\Users\\augus\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\MegamanXWeaponry\\MegamanXWeaponry.csproj": {
+    "A:\\Users\\augus\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\MegamanXWeaponry\\MegamanXWeaponry.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "A:\\Users\\augus\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\MegamanXWeaponry\\MegamanXWeaponry.csproj",
+        "projectUniqueName": "A:\\Users\\augus\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\MegamanXWeaponry\\MegamanXWeaponry.csproj",
         "projectName": "MegamanXWeaponry",
-        "projectPath": "A:\\Users\\augus\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\MegamanXWeaponry\\MegamanXWeaponry.csproj",
+        "projectPath": "A:\\Users\\augus\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\MegamanXWeaponry\\MegamanXWeaponry.csproj",
         "packagesPath": "C:\\Users\\augus\\.nuget\\packages\\",
-        "outputPath": "A:\\Users\\augus\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\MegamanXWeaponry\\obj\\",
+        "outputPath": "A:\\Users\\augus\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\MegamanXWeaponry\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\augus\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net45"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.bepinex.dev/v3/index.json": {}
         },
         "frameworks": {
-          "net45": {
-            "targetAlias": "net45",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {}
           }
         },
@@ -37,15 +38,31 @@
         }
       },
       "frameworks": {
-        "net45": {
-          "targetAlias": "net45",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "tModLoader.CodeAssist": {
               "target": "Package",
               "version": "[0.1.*, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

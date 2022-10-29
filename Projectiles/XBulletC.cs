@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,22 +15,21 @@ namespace MegamanXWeaponry.Projectiles
 			DisplayName.SetDefault("XBulletC");     //The English name of the projectile
 			//ProjectileID.Sets.TrailCacheLength[projectile.type] = 4;    //The length of old position to be recorded
 			//ProjectileID.Sets.TrailingMode[projectile.type] = 0;        //The recording mode
-			Main.projFrames[projectile.type] = 4;
+			Main.projFrames[Projectile.type] = 4;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.width = 40;
-			projectile.height = 40;
-			projectile.friendly = true;
-			projectile.melee = false;
-			projectile.ignoreWater = true;
-			projectile.tileCollide = false;
-			projectile.alpha = 255;
-			projectile.penetrate = -1;
-			projectile.magic = true;
-			projectile.damage = 30;
-			projectile.light = 0.8f;
+            Projectile.width = 40;
+            Projectile.height = 40;
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
+            Projectile.penetrate = -1;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.damage = 30;
+            Projectile.light = 0.8f;
 
 			//1: projectile.penetrate = 1; // Will hit even if npc is currently immune to player
 			//2a: projectile.penetrate = -1; // Will hit and unless 3 is use, set 10 ticks of immunity
@@ -47,21 +48,30 @@ namespace MegamanXWeaponry.Projectiles
 		public override Color? GetAlpha(Color lightColor)
 		{
 			//return Color.White;
-			return new Color(255, 255, 255, 0) * (1f - (float)projectile.alpha / 255f);
+			return new Color(150, 255, 150, 0) * (1f - (float)Projectile.alpha / 255f);
 		}
 
 		public override void AI()
 		{
-			projectile.ai[0] += 1f;
+            Projectile.ai[0] += 1f;
 
-			if(!SpeedUp)
+            Lighting.AddLight(Projectile.position, 0.1f, 0.5f, 0.1f);
+
+            Dust dustP;
+            // You need to set position depending on what you are doing. You may need to subtract width/2 and height/2 as well to center the spawn rectangle.
+            Vector2 position = Projectile.Center;
+            position.X = Projectile.Center.X - 20f;
+            position.Y = Projectile.Center.Y - 20f;
+            dustP = Main.dust[Terraria.Dust.NewDust(position, 93, 37, 298, 0f, 0f, 0, new Color(255, 255, 255), 1f)];
+
+            if (!SpeedUp)
             {
-				projectile.velocity *= 1.8f;
+                Projectile.velocity *= 1.8f;
 				SpeedUp = true;
 			}
 				
 
-			if (projectile.ai[0] > 50f)
+			if (Projectile.ai[0] > 50f)
 			{
 				// Fade out
 				//projectile.alpha += 25;
@@ -72,85 +82,95 @@ namespace MegamanXWeaponry.Projectiles
 			}
 			else
 			{
-				// Fade in
-				projectile.alpha -= 25;
-				if (projectile.alpha < 100)
+                // Fade in
+                Projectile.alpha -= 25;
+				if (Projectile.alpha < 100)
 				{
-					projectile.alpha = 100;
+                    Projectile.alpha = 100;
 				}
 			}
 			// Slow down
 			//projectile.velocity *= 0.98f;
 			//projectile.velocity *= 1.002f;
 			// Loop through the 4 animation frames, spending 5 ticks on each.
-			if (++projectile.frameCounter >= 5)
+			if (++Projectile.frameCounter >= 5)
 			{
-				projectile.frameCounter = 0;
-				if (++projectile.frame >= 4)
+                Projectile.frameCounter = 0;
+				if (++Projectile.frame >= 4)
 				{
-					projectile.frame = 0;
+                    Projectile.frame = 0;
 				}
 			}
 			// Kill this projectile after 1 second
-			if (projectile.ai[0] >= 300f)
+			if (Projectile.ai[0] >= 300f)
 			{
-				projectile.Kill();
+                Projectile.Kill();
 			}
-			projectile.direction = projectile.spriteDirection = projectile.velocity.X > 0f ? 1 : -1;
-			projectile.rotation = projectile.velocity.ToRotation();
-			if (projectile.velocity.Y > 16f)
+            Projectile.direction = Projectile.spriteDirection = Projectile.velocity.X > 0f ? 1 : -1;
+            Projectile.rotation = Projectile.velocity.ToRotation();
+			if (Projectile.velocity.Y > 16f)
 			{
 				//projectile.velocity.Y = 16f;
 			}
 			// Since our sprite has an orientation, we need to adjust rotation to compensate for the draw flipping.
-			if (projectile.spriteDirection == -1)
+			if (Projectile.spriteDirection == -1)
 			{
-				projectile.rotation += MathHelper.Pi;
+                Projectile.rotation += MathHelper.Pi;
 			}
 		}
 
-		// Some advanced drawing because the texture image isn't centered or symetrical.
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
-		{
-			SpriteEffects spriteEffects = SpriteEffects.None;
-			if (projectile.spriteDirection == -1)
-			{
-				spriteEffects = SpriteEffects.FlipHorizontally;
-			}
-			Texture2D texture = Main.projectileTexture[projectile.type];
-			int frameHeight = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
-			int startY = frameHeight * projectile.frame;
-			Rectangle sourceRectangle = new Rectangle(0, startY, texture.Width, frameHeight);
-			Vector2 origin = sourceRectangle.Size() / 2f;
-			origin.X = (float)(projectile.spriteDirection == 1 ? sourceRectangle.Width - 20 : 20);
+        // Some advanced drawing because the texture image isn't centered or symetrical.
+        public override bool PreDraw(ref Color lightColor)
+        {
+            // SpriteEffects helps to flip texture horizontally and vertically
+            SpriteEffects spriteEffects = SpriteEffects.None;
+            if (Projectile.spriteDirection == -1)
+                spriteEffects = SpriteEffects.FlipHorizontally;
 
-			Color drawColor = projectile.GetAlpha(lightColor);
-			Main.spriteBatch.Draw(texture,
-				projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY),
-				sourceRectangle, drawColor, projectile.rotation, origin, projectile.scale, spriteEffects, 0f);
+            // Getting texture of projectile
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
 
-			return false;
-		}
+            // Calculating frameHeight and current Y pos dependence of frame
+            // If texture without animation frameHeight is always texture.Height and startY is always 0
+            int frameHeight = texture.Height / Main.projFrames[Projectile.type];
+            int startY = frameHeight * Projectile.frame;
 
-		public override void Kill(int timeLeft)
+            // Get this frame on texture
+            Rectangle sourceRectangle = new Rectangle(0, startY, texture.Width, frameHeight);
+
+            // Alternatively, you can skip defining frameHeight and startY and use this:
+            // Rectangle sourceRectangle = texture.Frame(1, Main.projFrames[Projectile.type], frameY: Projectile.frame);
+
+            Vector2 origin = sourceRectangle.Size() / 2f;
+
+            // If image isn't centered or symmetrical you can specify origin of the sprite
+            // (0,0) for the upper-left corner
+            float offsetX = 20f;
+            origin.X = (float)(Projectile.spriteDirection == 1 ? sourceRectangle.Width - offsetX : offsetX);
+
+            // If sprite is vertical
+            // float offsetY = 20f;
+            // origin.Y = (float)(Projectile.spriteDirection == 1 ? sourceRectangle.Height - offsetY : offsetY);
+
+
+            // Applying lighting and draw current frame
+            Color drawColor = Projectile.GetAlpha(lightColor);
+            Main.EntitySpriteDraw(texture,
+                Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
+                sourceRectangle, drawColor, Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+
+            // It's important to return false, otherwise we also draw the original texture.
+            return false;
+        }
+    
+
+    public override void Kill(int timeLeft)
 		{
 			// This code and the similar code above in OnTileCollide spawn dust from the tiles collided with. SoundID.Item10 is the bounce sound you hear.
-			Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
-			Main.PlaySound(SoundID.Item10, projectile.position);
+			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
+            SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 		}
 	}
 
-	internal class ExamplePierce : ModItem
-	{
-		public override string Texture => "Terraria/Item_" + ItemID.NebulaBlaze;
-
-		public override void SetDefaults()
-		{
-			item.CloneDefaults(ItemID.NebulaBlaze);
-			item.mana = 50;
-			item.damage = 3;
-			item.shoot = ModContent.ProjectileType<XBulletC>();
-		}
-	}
 }
 

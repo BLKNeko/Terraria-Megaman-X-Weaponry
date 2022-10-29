@@ -1,5 +1,7 @@
-using Terraria.ModLoader;
+using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace MegamanXWeaponry.Items.Armor
 {
@@ -15,23 +17,21 @@ namespace MegamanXWeaponry.Items.Armor
 		}
 
 		public override void SetDefaults() {
-			item.width = 28;
-			item.height = 20;
-			item.rare = ItemRarityID.Blue;
-			item.vanity = true;
-		}
+			Item.width = 28;
+            Item.height = 20;
+            Item.rare = ItemRarityID.Blue;
+            Item.vanity = true;
+            Item.value = Item.sellPrice(silver: 50);
+            Item.maxStack = 1;
+        }
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Silk, 10);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.Silk, 10)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 
-		public override bool DrawHead() {
-			return false;
-		}
 	}
 }

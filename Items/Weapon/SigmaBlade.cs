@@ -2,6 +2,8 @@
 using MegamanXWeaponry.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,37 +17,43 @@ namespace MegamanXWeaponry.Items.Weapon
 		}
 
 		public override void SetDefaults() {
-			item.damage = 50; // The damage your item deals
-			item.melee = true; // Whether your item is part of the melee class
-			item.width = 90; // The item texture's width
-			item.height = 90; // The item texture's height
-			item.useTime = 35; // The time span of using the weapon. Remember in terraria, 60 frames is a second.
-			item.useAnimation = 35; // The time span of the using animation of the weapon, suggest setting it the same as useTime.
-			item.knockBack = 15; // The force of knockback of the weapon. Maximum is 20
-			item.value = Item.buyPrice(gold: 3); // The value of the weapon in copper coins
-			item.rare = ItemRarityID.Green; // The rarity of the weapon, from -1 to 13. You can also use ItemRarityID.TheColorRarity
+			Item.damage = 50; // The damage your item deals
+            Item.DamageType = DamageClass.Melee; // Whether your item is part of the melee class
+            Item.width = 90; // The item texture's width
+			Item.height = 90; // The item texture's height
+			Item.useTime = 35; // The time span of using the weapon. Remember in terraria, 60 frames is a second.
+			Item.useAnimation = 35; // The time span of the using animation of the weapon, suggest setting it the same as useTime.
+			Item.knockBack = 15; // The force of knockback of the weapon. Maximum is 20
+			Item.value = Item.buyPrice(gold: 8); // The value of the weapon in copper coins
+			Item.rare = ItemRarityID.Green; // The rarity of the weapon, from -1 to 13. You can also use ItemRarityID.TheColorRarity
 			//item.UseSound = SoundID.Item1; // The sound when the weapon is being used
-			item.autoReuse = true; // Whether the weapon can be used more than once automatically by holding the use button
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SigmaBlade");
-			item.crit = 6; // The critical strike chance the weapon has. The player, by default, has 4 critical strike chance
-			item.scale = 2.25f;
+			Item.autoReuse = true; // Whether the weapon can be used more than once automatically by holding the use button
+			Item.UseSound = new SoundStyle("MegamanXWeaponry/Sounds/Item/SigmaBlade")
+            {
+                Volume = 0.7f,
+                Pitch = 0f,
+                PitchVariance = 0.3f,
+                MaxInstances = 1,
+                SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest
+            };
+            Item.crit = 6; // The critical strike chance the weapon has. The player, by default, has 4 critical strike chance
+			Item.scale = 2.25f;
 			//The useStyle of the item. 
 			//Use useStyle 1 for normal swinging or for throwing
 			//use useStyle 2 for an item that drinks such as a potion,
 			//use useStyle 3 to make the sword act like a shortsword
 			//use useStyle 4 for use like a life crystal,
 			//and use useStyle 5 for staffs or guns
-			item.useStyle = 1;//ItemUseStyleID.SwingThrow; // 1 is the useStyle
+			Item.useStyle = 1;//ItemUseStyleID.SwingThrow; // 1 is the useStyle
 		}
 
 		public override void AddRecipes() {
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.MeteoriteBar, 15);
-			recipe.AddIngredient(ItemID.HellstoneBar, 10);
-			recipe.AddIngredient(ItemID.Glowstick, 50);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+			.AddIngredient(ItemID.MeteoriteBar, 15)
+			.AddIngredient(ItemID.HellstoneBar, 10)
+			.AddIngredient(ItemID.Glowstick, 50)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox) {
@@ -56,6 +64,7 @@ namespace MegamanXWeaponry.Items.Weapon
 			}
 		}
 
+
 		public override bool AltFunctionUse(Player player)
 		{
 			return true;
@@ -65,44 +74,43 @@ namespace MegamanXWeaponry.Items.Weapon
 		{
 			if (player.altFunctionUse == 2)
 			{
-				item.useStyle = ItemUseStyleID.Stabbing;
-				item.useTime = 20;
-				item.useAnimation = 25;
-				item.damage = 50;
-				item.knockBack = 1;
+				Item.useStyle = ItemUseStyleID.Thrust;
+				Item.useTime = 20;
+				Item.useAnimation = 25;
+				Item.damage = 50;
+				Item.knockBack = 1;
 				//item.shoot = ProjectileID.Bee;
-				item.shoot = ProjectileID.VenomFang;
-				item.shootSpeed = 5f;
+				Item.shoot = ProjectileID.VenomFang;
+				Item.shootSpeed = 5f;
+                Item.autoReuse = true;
 
-			}
+            }
 			else
 			{
-				item.noUseGraphic = false;
-				item.noMelee = false;
-				item.useStyle = ItemUseStyleID.SwingThrow;
-				item.shoot = ProjectileID.None;
-				item.damage = 50; // The damage your item deals
-				item.melee = true; // Whether your item is part of the melee class
-				item.width = 90; // The item texture's width
-				item.height = 90; // The item texture's height
-				item.useTime = 35; // The time span of using the weapon. Remember in terraria, 60 frames is a second.
-				item.useAnimation = 35; // The time span of the using animation of the weapon, suggest setting it the same as useTime.
-				item.knockBack = 15; // The force of knockback of the weapon. Maximum is 20
-				item.value = Item.buyPrice(gold: 1); // The value of the weapon in copper coins
-				item.rare = ItemRarityID.Green; // The rarity of the weapon, from -1 to 13. You can also use ItemRarityID.TheColorRarity
+				Item.noUseGraphic = false;
+				Item.noMelee = false;
+				Item.useStyle = ItemUseStyleID.Swing;
+				Item.shoot = ProjectileID.None;
+				Item.damage = 50; // The damage your item deals
+                Item.DamageType = DamageClass.Melee; // Whether your item is part of the melee class
+                Item.width = 90; // The item texture's width
+				Item.height = 90; // The item texture's height
+				Item.useTime = 35; // The time span of using the weapon. Remember in terraria, 60 frames is a second.
+				Item.useAnimation = 35; // The time span of the using animation of the weapon, suggest setting it the same as useTime.
+				Item.knockBack = 15; // The force of knockback of the weapon. Maximum is 20
+				Item.value = Item.buyPrice(0, 0, 20, 0); // The value of the weapon in copper coins
+				Item.rare = ItemRarityID.Green; // The rarity of the weapon, from -1 to 13. You can also use ItemRarityID.TheColorRarity
 												//item.UseSound = SoundID.Item1; // The sound when the weapon is being used
-				item.autoReuse = true; // Whether the weapon can be used more than once automatically by holding the use button
-				item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SigmaBlade");
-				item.crit = 6; // The critical strike chance the weapon has. The player, by default, has 4 critical strike chance
-				item.scale = 2.25f;
+				Item.autoReuse = true; // Whether the weapon can be used more than once automatically by holding the use button
+				//Item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SigmaBlade");
+				Item.crit = 6; // The critical strike chance the weapon has. The player, by default, has 4 critical strike chance
+				Item.scale = 2.25f;
 				//The useStyle of the item. 
 				//Use useStyle 1 for normal swinging or for throwing
 				//use useStyle 2 for an item that drinks such as a potion,
 				//use useStyle 3 to make the sword act like a shortsword
 				//use useStyle 4 for use like a life crystal,
 				//and use useStyle 5 for staffs or guns
-				item.useStyle = 1;//ItemUseStyleID.SwingThrow; // 1 is the useStyle
-
 			}
 			return base.CanUseItem(player);
 		}
@@ -112,21 +120,6 @@ namespace MegamanXWeaponry.Items.Weapon
 			// 60 frames = 1 second
 			//target.AddBuff(BuffID.OnFire, 60);
 			target.AddBuff(BuffID.Slow, 60);
-		}
-
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			// Fix the speedX and Y to point them horizontally.
-			speedX = new Vector2(speedX, speedY).Length() * (speedX > 0 ? 1 : -1);
-			speedY = 0;
-			// Add random Rotation
-			Vector2 speed = new Vector2(speedX, speedY);
-			//speed = speed.RotatedByRandom(MathHelper.ToRadians(30));
-			// Change the damage since it is based off the weapons damage and is too high
-			damage = (int)(damage * .4f);
-			speedX = speed.X;
-			speedY = speed.Y;
-			return true;
 		}
 
 		public override Vector2? HoldoutOffset()

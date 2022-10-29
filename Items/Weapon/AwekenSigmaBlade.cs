@@ -2,6 +2,8 @@ using MegamanXWeaponry.Dusts;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -19,23 +21,33 @@ namespace MegamanXWeaponry.Items.Weapon
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 90;
-			base.item.crit = 13;
-			base.item.melee = true;
-			base.item.width = 55;
-			base.item.height = 55;
-			base.item.useTime = 35;
-			base.item.useAnimation = 35;
-			base.item.useStyle = 1;
-			base.item.knockBack = 4f;
+			Item.damage = 90;
+			Item.crit = 13;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 55;
+			Item.height = 55;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = 1;
+			Item.knockBack = 4f;
 			//base.item.value = 10000;
-			base.item.value = Item.sellPrice(1, 0, 0);
-			base.item.rare = 11;
-			base.item.scale = 2.5f;
-			//base.item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/ZSaber");
-			//item.shoot = base.mod.ProjectileType("XBullet");
-			item.shoot = ProjectileID.None;
-			item.shootSpeed = 8f;
+			Item.value = Item.sellPrice(gold: 20);
+			Item.rare = 11;
+			//Item.scale = 2.5f;
+            /*
+			Item.UseSound = new SoundStyle("MegamanXWeaponry/Sounds/Item/SigmaBlade")
+            {
+                Volume = 0.7f,
+                Pitch = 0f,
+                PitchVariance = 0.3f,
+                MaxInstances = 1,
+                SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest
+            };
+            */
+            //item.shoot = base.mod.ProjectileType("XBullet");
+            Item.shoot = ProjectileID.None;
+			Item.shootSpeed = 8f;
+			Item.useTurn = true;
 			//item.channel = true;
 
 
@@ -43,21 +55,32 @@ namespace MegamanXWeaponry.Items.Weapon
 
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("AwakenSigmaBlade");
-			base.Tooltip.SetDefault("The true power of this sword can now be achieved by charge his swing attack [c/3639bb: - Total costs 25MP ]");
+			base.DisplayName.SetDefault("SigmaBlade+");
+			base.Tooltip.SetDefault("A powerful giant sword, you can swing and pirce with this sword \n Charging enhances its power and size [c/3639bb: - Total costs 30MP ]");
 		}
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(mod.GetItem("SigmaBlade"));
-			recipe.AddIngredient(ItemID.MeteoriteBar, 20);
-			recipe.AddIngredient(ItemID.CrystalShard, 15);
-			recipe.AddIngredient(ItemID.OrichalcumBar, 10);
-			recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient<Weapon.SigmaBlade>()
+            .AddIngredient(ItemID.MeteoriteBar, 20)
+            .AddIngredient(ItemID.CrystalShard, 15)
+            .AddIngredient(ItemID.OrichalcumBar, 10)
+            .AddIngredient(ItemID.ChlorophyteBar, 10)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+
+
+
+            CreateRecipe()
+            .AddIngredient<Weapon.SigmaBlade>()
+			.AddIngredient(ItemID.MeteoriteBar, 20)
+			.AddIngredient(ItemID.CrystalShard, 15)
+			.AddIngredient(ItemID.MythrilBar, 10)
+			.AddIngredient(ItemID.ChlorophyteBar, 10)
+			.AddTile(TileID.MythrilAnvil)
+            .Register();
+
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
@@ -78,37 +101,44 @@ namespace MegamanXWeaponry.Items.Weapon
 		{
 			if (player.altFunctionUse == 2)
 			{
-				item.useStyle = ItemUseStyleID.Stabbing;
-				item.useTime = 20;
-				item.useAnimation = 20;
-				item.damage = 90;
-				item.knockBack = 1;
+				Item.useStyle = ItemUseStyleID.Thrust;
+				Item.useTime = 20;
+				Item.useAnimation = 20;
+				Item.damage = 90;
+				Item.knockBack = 1;
 				//item.shoot = ProjectileID.Bee;
-				item.shoot = ProjectileID.VenomFang;
-				item.shootSpeed = 5f;
+				Item.shoot = ProjectileID.VenomFang;
+				Item.shootSpeed = 5f;
+                Item.UseSound = new SoundStyle("MegamanXWeaponry/Sounds/Item/SigmaBlade")
+                {
+                    Volume = 0.7f,
+                    Pitch = 0f,
+                    PitchVariance = 0.3f,
+                    MaxInstances = 1,
+                    SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest
+                };
 
-			}
+            }
 			else
 			{
-				base.item.damage = 90;
-				base.item.crit = 13;
-				base.item.melee = true;
-				base.item.width = 55;
-				base.item.height = 55;
-				base.item.useTime = 40;
-				base.item.useAnimation = 40;
-				base.item.useStyle = 1;
-				base.item.knockBack = 4f;
-				//base.item.value = 10000;
-				base.item.value = Item.sellPrice(1, 0, 0);
-				base.item.rare = 7;
-				base.item.scale = 2.5f;
+				Item.damage = 90;
+				Item.crit = 13;
+                Item.DamageType = DamageClass.Melee;
+                Item.width = 55;
+				Item.height = 55;
+				Item.useTime = 30;
+				Item.useAnimation = 30;
+				Item.useStyle = 1;
+				Item.knockBack = 4f;
+				Item.value = Item.sellPrice(0, 4, 0, 0);
+				Item.rare = 7;
+				//Item.scale = 2.5f;
 				//base.item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/ZSaber");
 				//item.shoot = base.mod.ProjectileType("XBullet");
-				item.shoot = ProjectileID.None;
-				item.shootSpeed = 8f;
-				//item.channel = true;
-				//item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SigmaBlade");
+				Item.shoot = ProjectileID.None;
+				Item.shootSpeed = 8f;
+                //item.channel = true;
+                //Item.UseSound = 0;
 				
 
 			}
@@ -116,197 +146,404 @@ namespace MegamanXWeaponry.Items.Weapon
 		}
 
 
-		public override void UseStyle(Player player)
+
+		public override void UseStyle(Player player, Rectangle heldItemFrame)
 		{
-			if (player.itemAnimation == player.itemAnimationMax - 1 && player.controlUseItem)
-			{
-				if (charge < 120f)
-				{
-					////if (player.armor[0].type == base.mod.ItemType("KutKuHelmet") && player.armor[1].type == base.mod.ItemType("KutKuBreastplate") && player.armor[2].type == base.mod.ItemType("KutKuGreaves"))
-					//{
-					//	charge += 0.5f;
-					//}
-					charge += 1f;
-					if (charge >= 120f)
-					{
-						//Main.PlaySound(25);
-						Main.PlaySound(SoundLoader.customSoundType, -1, -1, mod.GetSoundSlot(SoundType.Custom, "Sounds/Custom/SigmaBladeReady"));
-					}
-				}
-				base.item.noMelee = true;
-				//base.item.useAnimation = (int)(40f / (1f + charge / 60f));
-				base.item.useAnimation = (int)(40f / (1f + charge / 60f));
-				player.itemAnimationMax = (int)((float)base.item.useAnimation * player.meleeSpeed);
-				player.itemAnimation = player.itemAnimationMax;
-			}
-			else
-			{
-				base.item.noMelee = false;
-			}
-			if (Main.rand.Next(3) == 0)
-			{
-				if (charge >= 20f && CanAscend)
-				{
-					base.item.scale = 3.5f;
-				}
-				if (charge >= 30f && CanAscend)
-				{
-					base.item.scale = 4.25f;
+			base.UseStyle(player, heldItemFrame);
 
-					if(player.statMana < 5f)
-                    {
-						CanAscend = false;
-                    }
-				}
-				if (charge >= 40f && CanAscend)
-				{
-					//int dust3 = Dust.NewDust(new Vector2(player.Center.X - 30f, player.Center.Y - 40f), 0, 0, 6, player.velocity.X, player.velocity.Y, 200, Color.White, 2f);
-					//Main.dust[dust3].noGravity = true;
-					//Main.dust[dust3].noLight = true;
-					Dust dust1;
-					// You need to set position depending on what you are doing. You may need to subtract width/2 and height/2 as well to center the spawn rectangle.
-					Vector2 position = Main.LocalPlayer.Center;
-					dust1 = Main.dust[Terraria.Dust.NewDust(new Vector2(player.Center.X - 20f, player.Center.Y - 20f), 40, 40, 0, 0f, 0f, 0, new Color(199, 252, 252), 1f)];
-					dust1.noGravity = true;
-					base.item.scale = 5f;
-					if(!MPD1)
-                    {
-						player.statMana -= 5;
-						MPD1 = true;
-					}
-				}
-				if (charge >= 50f && CanAscend)
-				{
-					base.item.scale = 5.5f;
-				}
-				if (charge >= 60f && CanAscend)
-				{
-					base.item.scale = 6.25f;
-					if (player.statMana < 10f)
-					{
-						CanAscend = false;
-					}
-				}
-				if (charge >= 80f && CanAscend)
-				{
-					//int dust2 = Dust.NewDust(new Vector2(player.Center.X, player.Center.Y - 40f), 0, 0, 6, player.velocity.X, player.velocity.Y, 200, Color.White, 2f);
-					//Main.dust[dust2].noGravity = true;
-					//Main.dust[dust2].noLight = true;
-					Dust dust2;
-					// You need to set position depending on what you are doing. You may need to subtract width/2 and height/2 as well to center the spawn rectangle.
-					Vector2 position = Main.LocalPlayer.Center;
-					dust2 = Main.dust[Terraria.Dust.NewDust(new Vector2(player.Center.X - 20f, player.Center.Y - 20f), 40, 40, 0, 0f, 0f, 0, new Color(186, 50, 6), 1.2f)];
-					dust2.noGravity = true;
-					base.item.scale = 7f;
-					if (!MPD2)
-					{
-						player.statMana -= 10;
-						MPD2 = true;
-					}
-				}
-				if (charge >= 90f && CanAscend)
-				{
-					base.item.scale = 7.5f;
-				}
-				if (charge >= 100f && CanAscend)
-				{
-					base.item.scale = 8f;
-				}
-				if (charge >= 110f && CanAscend)
-				{
-					base.item.scale = 9f;
-					if (player.statMana < 10f)
-					{
-						CanAscend = false;
-					}
-				}
-				if (charge >= 120f && CanAscend)
-				{
-					//int dust = Dust.NewDust(new Vector2(player.Center.X + 30f, player.Center.Y - 40f), 0, 0, 6, player.velocity.X, player.velocity.Y, 200, Color.White, 2f);
-					//Main.dust[dust].noGravity = true;
-					//Main.dust[dust].noLight = true;
-					Dust dust;
-					// You need to set position depending on what you are doing. You may need to subtract width/2 and height/2 as well to center the spawn rectangle.
-					Vector2 position = Main.LocalPlayer.Center;
-					dust = Main.dust[Terraria.Dust.NewDust(new Vector2(player.Center.X - 20f, player.Center.Y - 20f), 40, 40, 0, 0f, 0f, 0, new Color(244, 255, 0), 1.5f)];
-					dust.noGravity = true;
-					base.item.scale = 10f;
-					if (!MPD3)
-					{
-						player.statMana -= 10;
-						MPD3 = true;
-					}
 
-				}
-			}
-			if (charge < 120 && !player.controlUseItem && !Sfx1)
-			{
-				Main.PlaySound(SoundID.Item, -1, -1, mod.GetSoundSlot(SoundType.Item, "Sounds/Item/SigmaBlade"));
-				Sfx1 = true;
-			}
-			if (charge >= 120 && !player.controlUseItem)
+            if (player.itemAnimation == player.itemAnimationMax - 1 && player.controlUseItem)
             {
-				//Main.PlaySound(SoundLoader.customSoundType, -1, -1, mod.GetSoundSlot(SoundType.Item, "Sounds/Item/ZSaberCharge"));
-				Main.PlaySound(SoundID.Item, -1, -1, mod.GetSoundSlot(SoundType.Item, "Sounds/Item/SigmaBlade"));
-				if (player.statMana >= 10)
+                if (charge < 120f && CanAscend)
                 {
-                    if (!MPDown)
+                    ////if (player.armor[0].type == base.mod.ItemType("KutKuHelmet") && player.armor[1].type == base.mod.ItemType("KutKuBreastplate") && player.armor[2].type == base.mod.ItemType("KutKuGreaves"))
+                    //{
+                    //	charge += 0.5f;
+                    //}
+                    charge += 1f;
+                    if (charge >= 120f)
                     {
-						player.statMana -= 10;
-						MPDown = true;
+                        //Main.PlaySound(25);
+                        //Main.PlaySound(SoundLoader.customSoundType, -1, -1, mod.GetSoundSlot(SoundType.Custom, "Sounds/Custom/SigmaBladeReady"));
+                        SoundEngine.PlaySound(new SoundStyle("MegamanXWeaponry/Sounds/Custom/SigmaBladeReady")
+                        {
+                            Volume = 1f,
+                            Pitch = 0.2f,
+                            PitchVariance = 0.2f,
+                            MaxInstances = 1,
+                            SoundLimitBehavior = SoundLimitBehavior.IgnoreNew
+                        }, player.position);
                     }
-				
-				}
-				
-			}
-			if (player.itemAnimation == 0)
-			{
-				charge = 0f;
-				base.item.scale = 2.25f;
-				item.shoot = 0;
-				MPDown = false;
-				Sfx1 = false;
-				MPD1 = false;
-				MPD2 = false;
-				MPD3 = false;
-				CanAscend = true;
-			}
-		}
+                }
 
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			// Fix the speedX and Y to point them horizontally.
-			speedX = new Vector2(speedX, speedY).Length() * (speedX > 0 ? 1 : -1);
-			speedY = 0;
-			// Add random Rotation
-			Vector2 speed = new Vector2(speedX, speedY);
-			//speed = speed.RotatedByRandom(MathHelper.ToRadians(30));
-			// Change the damage since it is based off the weapons damage and is too high
-			damage = (int)(damage * .4f);
-			speedX = speed.X;
-			speedY = speed.Y;
-			return true;
-		}
+                player.itemAnimationMax = (int)((float)base.Item.useAnimation * player.GetAttackSpeed(DamageClass.Melee));
+                player.itemAnimation = player.itemAnimationMax;
+            }
+            else
+            {
+                base.Item.noMelee = false;
+            }
 
 
+            if (charge >= 120 && CanAscend)
+            {
+                if (!MPD3)
+                {
+                    if (player.statMana > 15f)
+                    {
+                        player.statMana -= 15;
+                        Item.scale = 15f;
+                        Item.damage = 280;
+                    }
+                    else
+                    {
+                        CanAscend = false;
+                    }
+
+                    MPD3 = true;
+                }
+
+                Dust dust3;
+                // You need to set position depending on what you are doing. You may need to subtract width/2 and height/2 as well to center the spawn rectangle.
+                Vector2 position = Main.LocalPlayer.Center;
+                position.X = Main.LocalPlayer.Center.X - 20f;
+                position.Y = Main.LocalPlayer.Center.Y - 20f;
+                dust3 = Main.dust[Terraria.Dust.NewDust(position, 55, 46, 226, 0f, 0f, 0, new Color(255, 255, 255), 0.5813954f)];
+                dust3.noGravity = true;
+                dust3.shader = GameShaders.Armor.GetSecondaryShader(73, Main.LocalPlayer);
+
+            }
+            else if (charge >= 110f && CanAscend)
+            {
+                Item.scale = 11f;
+                Item.damage = 245;
+            }
+            else if (charge >= 100f && CanAscend)
+            {
+                Item.scale = 10f;
+                Item.damage = 230;
+            }
+            else if (charge >= 90f && CanAscend)
+            {
+                Item.scale = 9f;
+                Item.damage = 215;
+            }
+            else if (charge >= 80f && CanAscend)
+            {
+                Item.scale = 8f;
+                Item.damage = 200;
+                if (!MPD2)
+                {
+                    if (player.statMana > 10f)
+                    {
+                        player.statMana -= 10;
+                    }
+                    else
+                    {
+                        CanAscend = false;
+                    }
+
+                    MPD2 = true;
+                }
+
+                Dust dust2;
+                // You need to set position depending on what you are doing. You may need to subtract width/2 and height/2 as well to center the spawn rectangle.
+                Vector2 position = Main.LocalPlayer.Center;
+                position.X = Main.LocalPlayer.Center.X - 20f;
+                position.Y = Main.LocalPlayer.Center.Y - 20f;
+                dust2 = Main.dust[Terraria.Dust.NewDust(position, 55, 46, 226, 0f, 0f, 0, new Color(255, 255, 255), 0.58f)];
+                dust2.noGravity = true;
+                dust2.shader = GameShaders.Armor.GetSecondaryShader(02, Main.LocalPlayer);
+
+            }
+            else if (charge >= 70f && CanAscend)
+            {
+                Item.scale = 7f;
+                Item.damage = 185;
+            }
+            else if (charge >= 60f && CanAscend)
+            {
+                Item.scale = 6f;
+                Item.damage = 170;
+            }
+            else if (charge >= 50f && CanAscend)
+            {
+                Item.scale = 5f;
+                Item.damage = 155;
+            }
+            else if (charge >= 40f && CanAscend)
+            {
+                Item.scale = 4f;
+                Item.damage = 140;
+                if (!MPD1)
+                {
+                    if (player.statMana > 5f)
+                    {
+                        player.statMana -= 5;
+                    }
+                    else
+                    {
+                        CanAscend = false;
+                    }
+
+                    MPD1 = true;
+                }
+
+                Dust dust1;
+                // You need to set position depending on what you are doing. You may need to subtract width/2 and height/2 as well to center the spawn rectangle.
+                Vector2 position = Main.LocalPlayer.Center;
+                position.X = Main.LocalPlayer.Center.X - 20f;
+                position.Y = Main.LocalPlayer.Center.Y - 20f;
+                dust1 = Main.dust[Terraria.Dust.NewDust(position, 55, 46, 226, 0f, 0f, 0, new Color(255, 255, 255), 0.58f)];
+                dust1.noGravity = true;
+                dust1.shader = GameShaders.Armor.GetSecondaryShader(83, Main.LocalPlayer);
+
+            }
+            else if (charge >= 30f && CanAscend)
+            {
+                Item.scale = 3f;
+                Item.damage = 110;
+            }
+            else if (charge >= 20f && CanAscend)
+            {
+                Item.scale = 2.8f;
+                Item.damage = 100;
+            }
+            else if (charge <= 19f)
+            {
+                Item.scale = 2.5f;
+                Item.damage = 90;
+            }
 
 
-		public override void GetWeaponDamage(Player player, ref int damage)
-		{
-			damage = (int)((float)damage * (1f + charge / 60f));
-		}
 
-		public override void GetWeaponCrit(Player player, ref int crit)
-		{
-			crit = (int)((float)crit * (1f + charge / 60f));
-		}
+            if (charge >= 40f)
+            {
+                if (Main.rand.NextFloat() < 0.35f)
+                {
+                    Dust dust1;
+                    // You need to set position depending on what you are doing. You may need to subtract width/2 and height/2 as well to center the spawn rectangle.
+                    Vector2 position = Main.LocalPlayer.Center;
+                    position.X = Main.LocalPlayer.Center.X - 20f;
+                    position.Y = Main.LocalPlayer.Center.Y - 20f;
+                    dust1 = Main.dust[Terraria.Dust.NewDust(position, 55, 46, 226, 0f, 0f, 0, new Color(255, 255, 255), 0.58f)];
+                    dust1.noGravity = true;
+                    dust1.shader = GameShaders.Armor.GetSecondaryShader(83, Main.LocalPlayer);
+                }
+            }
+            if (charge >= 80f)
+            {
+                if (Main.rand.NextFloat() < 0.5f)
+                {
+                    Dust dust2;
+                    // You need to set position depending on what you are doing. You may need to subtract width/2 and height/2 as well to center the spawn rectangle.
+                    Vector2 position = Main.LocalPlayer.Center;
+                    position.X = Main.LocalPlayer.Center.X - 20f;
+                    position.Y = Main.LocalPlayer.Center.Y - 20f;
+                    dust2 = Main.dust[Terraria.Dust.NewDust(position, 55, 46, 226, 0f, 0f, 0, new Color(255, 255, 255), 0.58f)];
+                    dust2.noGravity = true;
+                    dust2.shader = GameShaders.Armor.GetSecondaryShader(02, Main.LocalPlayer);
+                }
+            }
+            if (charge >= 120f)
+            {
+                if (Main.rand.NextFloat() < 0.75f)
+                {
+                    Dust dust3;
+                    // You need to set position depending on what you are doing. You may need to subtract width/2 and height/2 as well to center the spawn rectangle.
+                    Vector2 position = Main.LocalPlayer.Center;
+                    position.X = Main.LocalPlayer.Center.X - 20f;
+                    position.Y = Main.LocalPlayer.Center.Y - 20f;
+                    dust3 = Main.dust[Terraria.Dust.NewDust(position, 55, 46, 226, 0f, 0f, 0, new Color(255, 255, 255), 0.5813954f)];
+                    dust3.noGravity = true;
+                    dust3.shader = GameShaders.Armor.GetSecondaryShader(73, Main.LocalPlayer);
+                }
 
-		public override void GetWeaponKnockback(Player player, ref float knockback)
-		{
-			knockback *= 1f + charge / 60f;
-		}
+            }
 
-		public override void MeleeEffects(Player player, Rectangle hitbox)
+        }
+
+
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+        {
+
+            //Item.noMelee = (player.controlUseItem) ? true : false;
+
+
+            if (player.controlUseItem)
+            {
+                if (charge < 120f && CanAscend)
+                    charge += 1f;
+
+
+                Item.noMelee = true;
+
+
+
+
+
+                if (charge >= 120 && CanAscend)
+                {
+                    if (!MPD3)
+                    {
+                        if (player.statMana > 15f)
+                        {
+                            player.statMana -= 15;
+                            Item.scale = 15f;
+                            Item.damage = 280;
+                        }
+                        else
+                        {
+                            CanAscend = false;
+                        }
+
+                        MPD3 = true;
+                    }
+                }
+                else if (charge >= 110f && CanAscend)
+                {
+                    Item.scale = 11f;
+                    Item.damage = 245;
+                }
+                else if (charge >= 100f && CanAscend)
+                {
+                    Item.scale = 10f;
+                    Item.damage = 230;
+                }
+                else if (charge >= 90f && CanAscend)
+                {
+                    Item.scale = 9f;
+                    Item.damage = 215;
+                }
+                else if (charge >= 80f && CanAscend)
+                {
+                    Item.scale = 8f;
+                    Item.damage = 200;
+                    if (!MPD2)
+                    {
+                        if (player.statMana > 10f)
+                        {
+                            player.statMana -= 10;
+                        }
+                        else
+                        {
+                            CanAscend = false;
+                        }
+
+                        MPD2 = true;
+                    }
+                }
+                else if (charge >= 70f && CanAscend)
+                {
+                    Item.scale = 7f;
+                    Item.damage = 185;
+                }
+                else if (charge >= 60f && CanAscend)
+                {
+                    Item.scale = 6f;
+                    Item.damage = 170;
+                }
+                else if (charge >= 50f && CanAscend)
+                {
+                    Item.scale = 5f;
+                    Item.damage = 155;
+                }
+                else if (charge >= 40f && CanAscend)
+                {
+                    Item.scale = 4f;
+                    Item.damage = 140;
+                    if (!MPD1)
+                    {
+                        if (player.statMana > 5f)
+                        {
+                            player.statMana -= 5;
+                        }
+                        else
+                        {
+                            CanAscend = false;
+                        }
+
+                        MPD1 = true;
+                    }
+                }
+                else if (charge >= 30f && CanAscend)
+                {
+                    Item.scale = 3f;
+                    Item.damage = 110;
+                }
+                else if (charge >= 20f && CanAscend)
+                {
+                    Item.scale = 2.8f;
+                    Item.damage = 100;
+                }
+                else if (charge <= 19f)
+                {
+                    Item.scale = 2.5f;
+                    Item.damage = 90;
+                }
+
+
+
+
+                //Item.damage = 30 * (int)((float)(1f + charge / 60f));
+
+            }
+            else
+            {
+                Item.noMelee = false;
+
+                if (charge >= 2 && player.itemAnimation == player.itemAnimationMax - 1)
+                {
+
+                    SoundEngine.PlaySound(new SoundStyle("MegamanXWeaponry/Sounds/Item/SigmaBlade")
+                    {
+                        Volume = 1f,
+                        Pitch = 0f,
+                        PitchVariance = 0.1f,
+                        MaxInstances = 1,
+                        SoundLimitBehavior = SoundLimitBehavior.IgnoreNew,
+                    }, player.position);
+
+
+                }
+
+                    
+
+                charge = 1f;
+                MPDown = false;
+                Sfx1 = false;
+                MPD1 = false;
+                MPD2 = false;
+                MPD3 = false;
+                CanAscend = true;
+            }
+
+
+            
+
+
+            //damage = StatModifier.Default;
+            //Mod.Logger.DebugFormat("Some debug info for charge in modify: ({0})", charge);
+            //damage *= (1f + charge / 60f);
+
+        }
+
+
+        public override void ModifyWeaponCrit(Player player, ref float crit)
+        {
+
+            crit = (int)((float)crit * (1f + charge / 60f));
+
+        }
+
+        public override void ModifyWeaponKnockback(Player player, ref StatModifier knockback)
+        {
+            knockback *= 1f + charge / 60f;
+        }
+
+
+
+        public override void MeleeEffects(Player player, Rectangle hitbox)
 		{
 			Lighting.AddLight((new Vector2(hitbox.X, hitbox.Y)), 68 * 0.008f, 7 * 0.008f, 173 * 0.008f);
 			if (Main.rand.Next((int)(100f / charge)) == 0)

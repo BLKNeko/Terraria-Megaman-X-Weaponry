@@ -3,6 +3,7 @@ Megaman X Weaponry is a mod that add a lot of Megaman universe weapons to Terrar
 This mod contais some of Megaman series SFX.
 
 So far i added to this mod:
+V 1.0.0.0
 -MegaBuster (Ranged weapons with charge function)
 -XBuster (Ranged weapons with charge function)
 -ZSaber (Meelee weapon with charge function)
@@ -15,11 +16,48 @@ So far i added to this mod:
 -AwakenSigmaBlade (Meelee weapon with charge function)
 -UltimateBuster (Ranged weapons with charge function)
 
-If you want to talk about the mod or chat you can DM me in Discord BLKNeko#8448
+V 1.3.2.0
+-Pantheon Guardian (Zombie like monster)
+-Half-Charge for base attacks
+-BattleChip StormEagle for X-Buster (Change X-Buster regular and charged attacks to StormTornado)
+-Fix Busters position
+-Fix Descriptions and names (Thanks to deviantanomaly)
 
-I know that chargeLoop SFX is not looping perfectly, but i just can't make a decent loop, sorry.
+V1.4.4.0
+-BattleChip BombMan for Mega Buster (Change Mega Buster regular and charged attacks to HyperBomb)
+-Fix negative mana issue when try to use weapons without necessary MP.
+-Fix Busters Half-Charge
+
+V1.9.3.0
+-Phanteon Hunter (Ranged enemy)
+-BattonBone (Bat like monster)
+-BattleChip ChillPenguin for X-Buster (Change X-Buster regular and charged attacks to ShotgunIce)
+-BattleChip TunnelRhino for Max-Buster (Change Max-Buster regular and charged attacks to TornadoFang)
+-Pantheon Mask (Vanity Item)
+-Fix Reforge high value
+-Possible fix for Z-Saber
+-Fix redundant recipies
+
+V1.17.1.0
+-Zero Armor set (Give Zero abilities like slide walls, dash, double jump, etc)
+-Zero Mask (Vanity Item)
+-Sigma Virus (Floating Night Hardmode monster)
+-Battlechip ShiningFirefly for Ultimae-Buster (Change Ultimate-Buster regular and charged attacks to Flash Laser)
+-Pantheon mask D's Version (deviantanomaly version for Pantheon Mask)
+-Rush Jet Chip (Rush Jet Mount)
+-E-Tank (Healing Item)
+-Megaman Door (Door like classic megaman boss door)
+-Fix vanity heads strange movement (Thanks deviantanomaly)
+
+
+V1.18.0.0
+-Update for Terraria 1.4
+-Remove ShiningFirefly BattleChip because of BUGs
+-Now you cannot fast shoot with RMB, but can easely change between active BattleChips
 
 Thanks to:
 - @lia_shimizu that make all Buster sprites and X armor set
 - My Friends that help with balance and art.
 - Vibrant Reverie that creates the charge system, i used his mod as a base.
+- deviantanomaly, for helping with names, descriptions, fixes and some sprites!.
+- @lia_shimizu that make Zero Armor Set!
